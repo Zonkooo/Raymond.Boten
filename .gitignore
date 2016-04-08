@@ -1,0 +1,20 @@
+# NuGet packages
+packages/
+*.nupkg
+
+# All projects have an "obj/" and "bin/" directory when built
+obj/
+bin/
+criteo-bin/
+
+# User-specific project settings
+*.user
+*.suo
+*.docstates
+
+# VS extensions
+*.vs10x
+_ReSharper.*/
+*.sln.docstates
+
+specific.config
