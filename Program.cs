@@ -42,10 +42,12 @@ namespace Raymond.Boten
 
             Helper helper = new Helper(args.UserName, args.Password);
 
+            var projectBlacklist = new HashSet<string>(args.ProjectBlacklist.Split(','));
+
             try
             {
                 var group = new Group(args.TeamName, helper);
-                var changes = GetChangesFor(group, helper);
+                var changes = GetChangesFor(group, helper, projectBlacklist);
 
                 if(!args.NoReviewers)
                     AddReviewers(changes, args.TeamName, helper);
@@ -112,7 +114,7 @@ namespace Raymond.Boten
             }
         }
 
-        private static List<string> GetChangesFor(Group group, Helper helper)
+        private static List<string> GetChangesFor(Group @group, Helper helper, HashSet<string> projectBlacklist)
         {
             //list all projects
             var projects = helper.CallGerrit("projects/?d");
@@ -120,7 +122,8 @@ namespace Raymond.Boten
             foreach (JProperty project in projects)
             {
                 //and save those owned by the team
-                if (GetOwners(helper, project.Name).Contains(group.Id))
+                if (GetOwners(helper, project.Name).Contains(group.Id)
+                    && !projectBlacklist.Contains(project.Name))
                     ownedProjects.Add(project.Name);
             }
 

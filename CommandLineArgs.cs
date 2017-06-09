@@ -23,7 +23,11 @@ namespace Raymond.Boten
         /// <summary> set flag to prevent raymond from sending a mail to the team when a review gets too old </summary>
         [CommandLineArgument]
         public bool No24hMail { get; set; }
-        
+
+        /// <summary> comma separated list of projects that should not be considered </summary>
+        [CommandLineArgument]
+        public string ProjectBlacklist { get; set; }
+
         private static readonly ILog _logger = LogManager.GetLogger("Raymond.Boten");
         public static CommandLineArgs Parse(string[] args)
         {
