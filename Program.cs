@@ -18,7 +18,6 @@ namespace Raymond.Boten
 
     internal static class Program
     {
-
         private static readonly ILog _logger = LogManager.GetLogger("Raymond.Boten");
         private static readonly DateTime _now = DateTime.UtcNow;
 
@@ -42,7 +41,9 @@ namespace Raymond.Boten
 
             Helper helper = new Helper(args.UserName, args.Password);
 
-            var projectBlacklist = new HashSet<string>(args.ProjectBlacklist.Split(','));
+            HashSet<string> projectBlacklist = new HashSet<string>();
+            if(args.ProjectBlacklist != null)
+                projectBlacklist = new HashSet<string>(args.ProjectBlacklist.Split(','));
 
             try
             {
